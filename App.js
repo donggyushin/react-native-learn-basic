@@ -2,7 +2,22 @@ import React from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 
 class Greeting extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isShowingText: true
+    };
+
+    setInterval(() => {
+      this.setState(previousState => ({
+        isShowingText: !previousState.isShowingText
+      }));
+    }, 1000);
+  }
   render() {
+    if (!this.state.isShowingText) {
+      return null;
+    }
     return (
       <View style={styles.GreetingContainer}>
         <Text>Hello {this.props.name}!</Text>
