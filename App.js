@@ -20,7 +20,7 @@ class Greeting extends React.Component {
     }
     return (
       <View style={styles.GreetingContainer}>
-        <Text>Hello {this.props.name}!</Text>
+        <Text style={styles.GreetingText}>Hello {this.props.name}!</Text>
       </View>
     );
   }
@@ -55,5 +55,8 @@ const styles = StyleSheet.create({
   },
   GreetingContainer: {
     alignItems: "center"
+  },
+  GreetingText: {
+    color: "blue"
   }
 });
