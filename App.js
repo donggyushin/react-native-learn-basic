@@ -1,27 +1,28 @@
 import React from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { View, Button } from "react-native";
 
 export default class App extends React.Component {
   render() {
+    const { clickButton } = this;
     return (
-      <View style={[styles.container, styles.horizontal]}>
-        <ActivityIndicator size="large" color="#0000ff" />
-        <ActivityIndicator size="small" color="#00ff00" />
-        <ActivityIndicator size="large" color="#0000ff" />
-        <ActivityIndicator size="small" color="#00ff00" />
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+      >
+        <Button
+          onPress={clickButton}
+          title={"Learn More"}
+          color={"#841584"}
+          accessibilityLabel="Learn more about this purple button"
+        />
       </View>
     );
   }
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center"
-  },
-  horizontal: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    padding: 10
-  }
-});
+  clickButton = () => {
+    console.log("you pressed button");
+  };
+}
