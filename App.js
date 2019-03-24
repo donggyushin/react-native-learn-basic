@@ -1,110 +1,57 @@
 import React from "react";
-import { Modal, Text, TouchableHighlight, View, Alert } from "react-native";
+import { View, Picker, Text } from "react-native";
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalVisible: false
+      language: "javascript"
     };
-    this.setModalVisiable = this.setModalVisiable.bind(this);
-    this.popAlertUp = this.popAlertUp.bind(this);
-    this.clickModalButton = this.clickModalButton.bind(this);
-  }
-
-  setModalVisiable(visible) {
-    this.setState({
-      modalVisible: visible
-    });
   }
 
   render() {
-    const { clickModalButton, popAlertUp } = this;
-    const { modalVisible } = this.state;
+    const { onSelectChange } = this;
     return (
       <View
         style={{
-          marginTop: 22,
+          flex: 1,
+          borderColor: "black",
           justifyContent: "center",
-          alignItems: "center",
-          flex: 1
+          alignItems: "center"
         }}
       >
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={modalVisible}
-          onRequestClose={popAlertUp}
-        >
-          <View
-            style={{
-              marginTop: 22,
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-          >
-            <View
-              style={{
-                alignItems: "center",
-                backgroundColor: "#1abc9c"
-              }}
-            >
-              <Text
-                style={{
-                  color: "white",
-                  marginTop: 10,
-                  marginBottom: 10
-                }}
-              >
-                Hello World!
-              </Text>
-              <TouchableHighlight
-                underlayColor={"white"}
-                onPress={clickModalButton}
-                style={{
-                  padding: 20,
-                  backgroundColor: "#3498db"
-                }}
-              >
-                <Text
-                  style={{
-                    color: "white"
-                  }}
-                >
-                  Hide Modal
-                </Text>
-              </TouchableHighlight>
-            </View>
-          </View>
-        </Modal>
-        <TouchableHighlight
-          underlayColor={"white"}
+        <Text
           style={{
-            padding: 20,
-            backgroundColor: "#3498db"
+            borderColor: "black",
+            padding: 10,
+            borderWidth: 1,
+            borderRadius: 4
           }}
-          onPress={clickModalButton}
         >
-          <Text
-            style={{
-              color: "white"
-            }}
-          >
-            Show Modal
-          </Text>
-        </TouchableHighlight>
+          AJ
+        </Text>
+        <Picker
+          selectedValue={this.state.language}
+          onValueChange={onSelectChange}
+          style={{
+            borderColor: "red",
+            width: "100%"
+          }}
+        >
+          <Picker.Item label="Java" value="java" />
+          <Picker.Item label="JavaScript" value="javascript" />
+          <Picker.Item label="Python" value="python" />
+          <Picker.Item label="node.js" value="nodejs" />
+          <Picker.Item label="C#" value="c#" />
+          <Picker.Item label="Ruby" value="ruby" />
+        </Picker>
       </View>
     );
   }
 
-  popAlertUp = () => {
-    Alert.alert("Modal has been closed");
-  };
-
-  clickModalButton = () => {
-    const { modalVisible } = this.state;
-    const { setModalVisiable } = this;
-    setModalVisiable(!modalVisible);
+  onSelectChange = (itemValue, itemIndex) => {
+    this.setState({
+      language: itemValue
+    });
   };
 }
