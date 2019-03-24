@@ -1,39 +1,110 @@
 import React from "react";
-import { MaskedViewIOS, Text, View } from "react-native";
+import { Modal, Text, TouchableHighlight, View, Alert } from "react-native";
 
 export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalVisible: false
+    };
+    this.setModalVisiable = this.setModalVisiable.bind(this);
+    this.popAlertUp = this.popAlertUp.bind(this);
+    this.clickModalButton = this.clickModalButton.bind(this);
+  }
+
+  setModalVisiable(visible) {
+    this.setState({
+      modalVisible: visible
+    });
+  }
+
   render() {
+    const { clickModalButton, popAlertUp } = this;
+    const { modalVisible } = this.state;
     return (
-      // Determines shape of the mask
-      <MaskedViewIOS
-        style={{ flex: 1, flexDirection: "row", height: "100%" }}
-        maskElement={
+      <View
+        style={{
+          marginTop: 22,
+          justifyContent: "center",
+          alignItems: "center",
+          flex: 1
+        }}
+      >
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={modalVisible}
+          onRequestClose={popAlertUp}
+        >
           <View
             style={{
-              // Transparent background because mask is based off alpha channel.
-              backgroundColor: "transparent",
+              marginTop: 22,
               flex: 1,
               justifyContent: "center",
               alignItems: "center"
             }}
           >
-            <Text
+            <View
               style={{
-                fontSize: 60,
-                color: "black",
-                fontWeight: "bold"
+                alignItems: "center",
+                backgroundColor: "#1abc9c"
               }}
             >
-              Basic Mask
-            </Text>
+              <Text
+                style={{
+                  color: "white",
+                  marginTop: 10,
+                  marginBottom: 10
+                }}
+              >
+                Hello World!
+              </Text>
+              <TouchableHighlight
+                underlayColor={"white"}
+                onPress={clickModalButton}
+                style={{
+                  padding: 20,
+                  backgroundColor: "#3498db"
+                }}
+              >
+                <Text
+                  style={{
+                    color: "white"
+                  }}
+                >
+                  Hide Modal
+                </Text>
+              </TouchableHighlight>
+            </View>
           </View>
-        }
-      >
-        {/* Shows behind the mask, you can put anything here, such as an image */}
-        <View style={{ flex: 1, height: "100%", backgroundColor: "#324376" }} />
-        <View style={{ flex: 1, height: "100%", backgroundColor: "#F5DD90" }} />
-        <View style={{ flex: 1, height: "100%", backgroundColor: "#F76C5E" }} />
-      </MaskedViewIOS>
+        </Modal>
+        <TouchableHighlight
+          underlayColor={"white"}
+          style={{
+            padding: 20,
+            backgroundColor: "#3498db"
+          }}
+          onPress={clickModalButton}
+        >
+          <Text
+            style={{
+              color: "white"
+            }}
+          >
+            Show Modal
+          </Text>
+        </TouchableHighlight>
+      </View>
     );
   }
+
+  popAlertUp = () => {
+    Alert.alert("Modal has been closed");
+  };
+
+  clickModalButton = () => {
+    const { modalVisible } = this.state;
+    const { setModalVisiable } = this;
+    setModalVisiable(!modalVisible);
+  };
 }
