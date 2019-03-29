@@ -1,36 +1,51 @@
 import React from "react";
-import { View, StatusBar, Text, Switch } from "react-native";
+import { View, StyleSheet, StatusBar, Keyboard, TextInput } from "react-native";
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      switchValue: true
-    };
+    this.state = {};
+  }
+
+  componentDidMount() {
+    this.keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      this._keyboardDidShow
+    );
+    this.keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      this._keyboardDidHide
+    );
+  }
+
+  componentWillUnmount() {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
   }
 
   render() {
-    const { onValueChange } = this;
-    const { switchValue } = this.state;
     return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          backgroundColor: "#3498db",
-          alignItems: "center"
-        }}
-      >
-        <StatusBar backgroundColor="black" barStyle={"light-content"} />
-        <Switch onValueChange={onValueChange} value={switchValue} />
+      <View style={styles.container}>
+        <StatusBar barStyle="light-content" />
+        <TextInput onSubmitEditing={Keyboard.dismiss} placeholder={"asdasd"} />
       </View>
     );
   }
 
-  onValueChange = e => {
-    console.log(e);
-    this.setState({
-      switchValue: e
-    });
+  _keyboardDidShow = () => {
+    alert("Keyboard Shown");
+  };
+
+  _keyboardDidHide = () => {
+    alert("Keyboard Hidden");
   };
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#1dd1a1"
+  }
+});
